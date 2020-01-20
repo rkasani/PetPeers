@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PetPeersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Pet">
+          <Key>
+            <PropertyRef Name="PetId" />
+          </Key>
+          <Property Name="PetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PetName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Place" Type="nvarchar" MaxLength="150" />
+          <Property Name="Age" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="LastUpdatedOn" Type="datetime" />
+          <Property Name="IsAvailable" Type="bit" />
+          <Property Name="UserId" Type="bigint" />
+        </EntityType>
+        <EntityType Name="PetUserMapping">
+          <Key>
+            <PropertyRef Name="PetUserSaleMappingId" />
+          </Key>
+          <Property Name="PetUserSaleMappingId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PetId" Type="bigint" />
+          <Property Name="BroughtBy" Type="bigint" />
+          <Property Name="BroughtOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="150" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="150" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="LastUpdatedOn" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <Association Name="fk_Pet_UserId">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Pet" Type="Self.Pet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Pet">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_PetUserMapping_BroughtBy">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="PetUserMapping" Type="Self.PetUserMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="PetUserMapping">
+              <PropertyRef Name="BroughtBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_PetUserMapping_PetId">
+          <End Role="Pet" Type="Self.Pet" Multiplicity="0..1" />
+          <End Role="PetUserMapping" Type="Self.PetUserMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pet">
+              <PropertyRef Name="PetId" />
+            </Principal>
+            <Dependent Role="PetUserMapping">
+              <PropertyRef Name="PetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PetPeersModelStoreContainer">
+          <EntitySet Name="Pet" EntityType="Self.Pet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PetUserMapping" EntityType="Self.PetUserMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_Pet_UserId" Association="Self.fk_Pet_UserId">
+            <End Role="User" EntitySet="User" />
+            <End Role="Pet" EntitySet="Pet" />
+          </AssociationSet>
+          <AssociationSet Name="fk_PetUserMapping_BroughtBy" Association="Self.fk_PetUserMapping_BroughtBy">
+            <End Role="User" EntitySet="User" />
+            <End Role="PetUserMapping" EntitySet="PetUserMapping" />
+          </AssociationSet>
+          <AssociationSet Name="fk_PetUserMapping_PetId" Association="Self.fk_PetUserMapping_PetId">
+            <End Role="Pet" EntitySet="Pet" />
+            <End Role="PetUserMapping" EntitySet="PetUserMapping" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PetPeersModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Pet">
+          <Key>
+            <PropertyRef Name="PetId" />
+          </Key>
+          <Property Name="PetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PetName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Place" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="IsAvailable" Type="Boolean" />
+          <Property Name="UserId" Type="Int64" />
+          <NavigationProperty Name="User" Relationship="Self.fk_Pet_UserId" FromRole="Pet" ToRole="User" />
+          <NavigationProperty Name="PetUserMappings" Relationship="Self.fk_PetUserMapping_PetId" FromRole="Pet" ToRole="PetUserMapping" />
+        </EntityType>
+        <EntityType Name="PetUserMapping">
+          <Key>
+            <PropertyRef Name="PetUserSaleMappingId" />
+          </Key>
+          <Property Name="PetUserSaleMappingId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PetId" Type="Int64" />
+          <Property Name="BroughtBy" Type="Int64" />
+          <Property Name="BroughtOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Pet" Relationship="Self.fk_PetUserMapping_PetId" FromRole="PetUserMapping" ToRole="Pet" />
+          <NavigationProperty Name="User" Relationship="Self.fk_PetUserMapping_BroughtBy" FromRole="PetUserMapping" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Pets" Relationship="Self.fk_Pet_UserId" FromRole="User" ToRole="Pet" />
+          <NavigationProperty Name="PetUserMappings" Relationship="Self.fk_PetUserMapping_BroughtBy" FromRole="User" ToRole="PetUserMapping" />
+        </EntityType>
+        <Association Name="fk_Pet_UserId">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Pet" Type="Self.Pet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Pet">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_PetUserMapping_PetId">
+          <End Role="Pet" Type="Self.Pet" Multiplicity="0..1" />
+          <End Role="PetUserMapping" Type="Self.PetUserMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pet">
+              <PropertyRef Name="PetId" />
+            </Principal>
+            <Dependent Role="PetUserMapping">
+              <PropertyRef Name="PetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_PetUserMapping_BroughtBy">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="PetUserMapping" Type="Self.PetUserMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="PetUserMapping">
+              <PropertyRef Name="BroughtBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PetPeersEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Pets" EntityType="Self.Pet" />
+          <EntitySet Name="PetUserMappings" EntityType="Self.PetUserMapping" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="fk_Pet_UserId" Association="Self.fk_Pet_UserId">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Pet" EntitySet="Pets" />
+          </AssociationSet>
+          <AssociationSet Name="fk_PetUserMapping_PetId" Association="Self.fk_PetUserMapping_PetId">
+            <End Role="Pet" EntitySet="Pets" />
+            <End Role="PetUserMapping" EntitySet="PetUserMappings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_PetUserMapping_BroughtBy" Association="Self.fk_PetUserMapping_BroughtBy">
+            <End Role="User" EntitySet="Users" />
+            <End Role="PetUserMapping" EntitySet="PetUserMappings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PetPeersModelStoreContainer" CdmEntityContainer="PetPeersEntities">
+          <EntitySetMapping Name="Pets">
+            <EntityTypeMapping TypeName="PetPeersModel.Pet">
+              <MappingFragment StoreEntitySet="Pet">
+                <ScalarProperty Name="PetId" ColumnName="PetId" />
+                <ScalarProperty Name="PetName" ColumnName="PetName" />
+                <ScalarProperty Name="Place" ColumnName="Place" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
+                <ScalarProperty Name="IsAvailable" ColumnName="IsAvailable" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PetUserMappings">
+            <EntityTypeMapping TypeName="PetPeersModel.PetUserMapping">
+              <MappingFragment StoreEntitySet="PetUserMapping">
+                <ScalarProperty Name="PetUserSaleMappingId" ColumnName="PetUserSaleMappingId" />
+                <ScalarProperty Name="PetId" ColumnName="PetId" />
+                <ScalarProperty Name="BroughtBy" ColumnName="BroughtBy" />
+                <ScalarProperty Name="BroughtOn" ColumnName="BroughtOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="PetPeersModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
