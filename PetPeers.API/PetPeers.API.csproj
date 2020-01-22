@@ -129,6 +129,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PetController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -146,7 +147,24 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\PetPeers.Business\PetPeers.Business.csproj">
+      <Project>{958b0d0e-5f2c-4635-9a88-de9eadec8ee0}</Project>
+      <Name>PetPeers.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PetPeers.Common\PetPeers.Common.csproj">
+      <Project>{2b212e36-8882-441c-9dfe-aaca1ba9174b}</Project>
+      <Name>PetPeers.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PetPeers.DataAccess\PetPeers.DataAccess.csproj">
+      <Project>{c9a8ec47-d8eb-4c08-9b09-06e1e74b8367}</Project>
+      <Name>PetPeers.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PetPeers.Domain\PetPeers.Domain.csproj">
+      <Project>{e509a24f-e8d1-4579-94c2-fc5e9a0f0896}</Project>
+      <Name>PetPeers.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />

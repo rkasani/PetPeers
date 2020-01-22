@@ -40,13 +40,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IPetRepository.cs" />
     <Compile Include="Repository\IPetUserRepository.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\PetPeers.DataAccess\PetPeers.DataAccess.csproj">
+      <Project>{c9a8ec47-d8eb-4c08-9b09-06e1e74b8367}</Project>
+      <Name>PetPeers.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PetPeers.Domain\PetPeers.Domain.csproj">
+      <Project>{e509a24f-e8d1-4579-94c2-fc5e9a0f0896}</Project>
+      <Name>PetPeers.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

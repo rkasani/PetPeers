@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿/// <summary>
+/// GPL - added
+/// </summary>
 namespace PetPeers.Infrastructure.Repository
 {
-    interface IPetUserRepository
+    using Domain.Models;
+    /// <summary>
+    /// PetUser transaction interface
+    /// </summary>
+    public interface IPetUserRepository
     {
+        /// <summary>
+        /// Method to add data to BuyPet table
+        /// </summary>
+        /// <param name="newMapValue"></param>
+        void AddPetUserMap(BuyPet newMapValue);
     }
 }
