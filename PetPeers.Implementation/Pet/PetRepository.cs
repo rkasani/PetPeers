@@ -6,6 +6,8 @@
     using DataAccess;
     using Infrastructure.Repository;
     using System.Linq;
+    using AutoMapper;
+    using Common.Helpers;
 
     public class PetRepository : IPetRepository
     {
@@ -31,13 +33,15 @@
 
         public IEnumerable<DM.Pet> GetUserPets(long userId)
         {
-            var outResult = AutoMapper.Mapper.Map<IEnumerable<Pet>, IEnumerable<DM.Pet>>(petEnt.Pets);
-            return outResult;
+            return Mapper<DataAccess.Pet, DM.Pet>.TransformDTO(petEnt.Pets.Where(x => x.UserId == userId));
+            
         }
 
         public DM.Pet UpdatePetDetails(DM.Pet updatePet)
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }

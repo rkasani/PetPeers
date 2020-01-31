@@ -82,6 +82,10 @@
     <Compile Include="User\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PetPeers.Common\PetPeers.Common.csproj">
+      <Project>{2B212E36-8882-441C-9DFE-AACA1BA9174B}</Project>
+      <Name>PetPeers.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PetPeers.DataAccess\PetPeers.DataAccess.csproj">
       <Project>{c9a8ec47-d8eb-4c08-9b09-06e1e74b8367}</Project>
       <Name>PetPeers.DataAccess</Name>
