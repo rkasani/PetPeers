@@ -1,0 +1,15 @@
+{
+  "caseDetails": {
+    "caseNumber": "07-CA-234561",
+    "sequel": "1",
+    "NgActionID": "1-XRT56A",
+    "edit": {
+      "groups": [],
+      "users": ["hello"]
+    },
+    "read": {
+      "groups": [],
+      "users": []
+    }
+  }
+}
